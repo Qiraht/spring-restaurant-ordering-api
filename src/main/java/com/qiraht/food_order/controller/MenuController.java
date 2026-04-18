@@ -7,6 +7,7 @@ import com.qiraht.food_order.service.MenuService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,7 @@ public class MenuController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<String>> postMenu(@Valid @RequestBody MenuRequest request) {
         String data = menuService.createMenu(request);
 
@@ -50,6 +52,7 @@ public class MenuController {
     }
 
     @PutMapping("/{menuId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<Void>> putMenuById(@PathVariable("menuId") String id, @Valid @RequestBody MenuRequest request) {
         menuService.editMenuById(id, request);
 
@@ -59,6 +62,7 @@ public class MenuController {
     }
 
     @DeleteMapping("/{menuId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<Void>> deleteMenuById(@PathVariable("menuId") String id) {
         menuService.deleteMenuById(id);
 
