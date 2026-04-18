@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
     // Not Found Error
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ApiResponse<?>> handleBusinessException(NotFoundException ex, HttpServletRequest request) {
+    public ResponseEntity<ApiResponse<Void>> handleBusinessException(NotFoundException ex, HttpServletRequest request) {
         log.error("error while processing request", ex);
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ApiResponse.failed(ex.getMessage()));
@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
 
     // Jakarta Validation Error
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiResponse<?>> handleBusinessException(MethodArgumentNotValidException ex, HttpServletRequest request) {
+    public ResponseEntity<ApiResponse<Void>> handleBusinessException(MethodArgumentNotValidException ex, HttpServletRequest request) {
         log.error("error while processing request", ex);
 
         String message = ex.getBindingResult()
@@ -40,7 +40,7 @@ public class GlobalExceptionHandler {
 
     // Server Error
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponse<?>> handleBusinessException(Exception ex, HttpServletRequest request) {
+    public ResponseEntity<ApiResponse<Void>> handleBusinessException(Exception ex, HttpServletRequest request) {
         log.error("error while processing request", ex);
 
         return ResponseEntity.internalServerError().body(ApiResponse.failed(ex.getMessage()));
