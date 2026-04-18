@@ -48,4 +48,20 @@ public class MenuController {
                 ApiResponse.success("success", data)
         );
     }
+
+    @PutMapping("/{menuId}")
+    public ResponseEntity<ApiResponse<Void>> putMenuById(@PathVariable("menuId") String id, @Valid @RequestBody MenuRequest request) {
+        menuService.editMenuById(id, request);
+
+        return ResponseEntity.ok(
+                ApiResponse.success("Menu edited successfully")
+        );
+    }
+
+    @DeleteMapping("/{menuId}")
+    public ResponseEntity<ApiResponse<Void>> deleteMenuById(@PathVariable("menuId") String id) {
+        menuService.deleteMenuById(id);
+
+        return ResponseEntity.noContent().build();
+    }
 }
