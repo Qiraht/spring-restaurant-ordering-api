@@ -3,6 +3,7 @@ package com.qiraht.food_order.service;
 import com.qiraht.food_order.dto.request.MenuRequest;
 import com.qiraht.food_order.dto.response.MenuResponse;
 import com.qiraht.food_order.entity.Menu;
+import com.qiraht.food_order.exception.NotFoundException;
 import com.qiraht.food_order.repository.MenuRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -50,7 +51,7 @@ public class MenuService {
     public MenuResponse getMenuById(String id) {
         UUID menuId = UUID.fromString(id);
 
-        Menu menu = menuRepository.findById(menuId).orElse(() -> log.error("menu with id {} not found" , id));
+        Menu menu = menuRepository.findById(menuId).orElseThrow(() -> new NotFoundException("menu with id " + id +" not found"));
 
         return new MenuResponse(
                         menu.getId().toString(),
