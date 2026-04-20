@@ -3,6 +3,8 @@ package com.qiraht.food_order.controller;
 import com.qiraht.food_order.dto.ApiResponse;
 import com.qiraht.food_order.dto.request.MenuRequest;
 import com.qiraht.food_order.dto.response.MenuResponse;
+import com.qiraht.food_order.entity.Menu;
+import com.qiraht.food_order.helper.MenuMapper;
 import com.qiraht.food_order.service.MenuService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -35,7 +37,9 @@ public class MenuController {
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<MenuResponse>>> getMenus() {
-        List<MenuResponse> data = menuService.getAllMenus();
+        List<Menu> menus = menuService.getAllMenus();
+
+        List<MenuResponse> data = menus.stream().map(MenuMapper::toResponse).toList();
 
         return ResponseEntity.ok(
                 ApiResponse.success("success", data)
@@ -44,7 +48,9 @@ public class MenuController {
 
     @GetMapping("/{menuId}")
     public ResponseEntity<ApiResponse<MenuResponse>> getMenuById(@PathVariable("menuId") String id) {
-        MenuResponse data = menuService.getMenuById(id);
+        Menu menu = menuService.getMenuById(id);
+
+        MenuResponse data = MenuMapper.toResponse(menu);
 
         return ResponseEntity.ok(
                 ApiResponse.success("success", data)
