@@ -22,7 +22,9 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<AuthResponse>> postAuthLogin(@Valid @RequestBody AuthRequest request) {
-        AuthResponse data = authService.loginUser(request);
+        String token = authService.loginUser(request);
+
+        AuthResponse data = new AuthResponse(token);
 
         return ResponseEntity.ok(
                 ApiResponse.success("User login successfully", data)
