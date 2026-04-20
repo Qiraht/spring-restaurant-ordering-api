@@ -40,12 +40,11 @@ public class CartService {
         // get menu by id
         Menu menu = menuService.getMenuById(request.menuId());
 
-        // TODO: validate status and stock
         if (request.quantity() > menu.getStock()) {
             throw new ValidationException("Item stock is not enough");
         }
 
-        if (menu.getIsAvailable().equals(Boolean.FALSE)) {
+        if (menu.getDeletedAt() != null) {
             throw new ValidationException("Item is not available");
         }
 
@@ -105,7 +104,6 @@ public class CartService {
         // check items in cart
         CartItems items = cartItemsRepository.findById(itemId).orElseThrow(() -> new NotFoundException("Items in cart not found"));
 
-        // TODO: validation stock and items availability
         String menuId = items.getMenu().getId().toString();
 
         Menu menu = menuService.getMenuById(menuId);
