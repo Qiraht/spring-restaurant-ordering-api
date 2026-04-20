@@ -8,9 +8,11 @@ import com.qiraht.food_order.entity.Cart;
 import com.qiraht.food_order.entity.CartItems;
 import com.qiraht.food_order.helper.CartMapper;
 import com.qiraht.food_order.service.CartService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/cart")
 @Validated
+@Tag(name = "Cart", description = "Cart related endpoints")
 public class CartController {
     private final CartService cartService;
 
@@ -27,6 +30,7 @@ public class CartController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ApiResponse<Void>> postCart(@Valid @RequestBody CartItemRequest request) {
         cartService.addItemsToCart(request);
 
@@ -34,6 +38,7 @@ public class CartController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ApiResponse<CartResponse>> getCart() {
         Cart cart = cartService.getAuthenticatedUserCart();
 
@@ -59,6 +64,7 @@ public class CartController {
     }
 
     @PutMapping("/{itemId}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ApiResponse<Void>> putItemCart(@PathVariable("itemId") String id, @Valid @RequestBody Integer quantity) {
         cartService.updateCartItemQuantity(id, quantity);
 
