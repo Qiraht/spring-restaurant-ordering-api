@@ -3,6 +3,7 @@ package com.qiraht.food_order.controller;
 import com.qiraht.food_order.dto.ApiResponse;
 import com.qiraht.food_order.dto.request.UserRequest;
 import com.qiraht.food_order.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/user")
 @Validated
+@Tag(name = "User", description = "User related endpoints")
 public class UserController {
     private final UserService userService;
 
