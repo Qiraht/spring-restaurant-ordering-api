@@ -6,6 +6,7 @@ import com.qiraht.food_order.dto.response.MenuResponse;
 import com.qiraht.food_order.entity.Menu;
 import com.qiraht.food_order.helper.MenuMapper;
 import com.qiraht.food_order.service.MenuService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/menu")
 @Validated
+@Tag(name = "Menu", description = "Menu related endpoints")
 public class MenuController {
     private final MenuService menuService;
 

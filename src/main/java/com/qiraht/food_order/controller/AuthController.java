@@ -4,8 +4,10 @@ import com.qiraht.food_order.dto.ApiResponse;
 import com.qiraht.food_order.dto.request.AuthRequest;
 import com.qiraht.food_order.dto.response.AuthResponse;
 import com.qiraht.food_order.service.AuthService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
+@Validated
+@Tag(name = "Auth", description = "Auth related endpoint")
 public class AuthController {
     private final AuthService authService;
 
