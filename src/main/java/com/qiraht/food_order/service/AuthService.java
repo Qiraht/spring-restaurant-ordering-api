@@ -2,7 +2,6 @@ package com.qiraht.food_order.service;
 
 import com.qiraht.food_order.config.CustomUserDetails;
 import com.qiraht.food_order.dto.request.AuthRequest;
-import com.qiraht.food_order.dto.response.AuthResponse;
 import com.qiraht.food_order.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,7 +22,7 @@ public class AuthService {
         this.jwtUtil = jwtUtil;
     }
 
-    public AuthResponse loginUser(AuthRequest request) {
+    public String loginUser(AuthRequest request) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.email(), request.password())
         );
@@ -31,8 +30,6 @@ public class AuthService {
         CustomUserDetails userDetails = (CustomUserDetails) Objects.requireNonNull(
                 authentication.getPrincipal(), "Principal should not be null");
 
-        String token = jwtUtil.generateToken(userDetails);
-
-        return new AuthResponse(token);
+        return jwtUtil.generateToken(userDetails);
     }
 }
