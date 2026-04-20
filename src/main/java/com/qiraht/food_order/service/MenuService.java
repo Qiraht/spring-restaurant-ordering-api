@@ -1,7 +1,6 @@
 package com.qiraht.food_order.service;
 
 import com.qiraht.food_order.dto.request.MenuRequest;
-import com.qiraht.food_order.dto.response.MenuResponse;
 import com.qiraht.food_order.entity.Menu;
 import com.qiraht.food_order.exception.NotFoundException;
 import com.qiraht.food_order.repository.MenuRepository;
@@ -36,31 +35,14 @@ public class MenuService {
         return menu.getId().toString();
     }
 
-    public List<MenuResponse> getAllMenus() {
-        List<Menu> menus = menuRepository.findAll();
-
-        return menus.stream().map(m ->  new MenuResponse(
-                m.getId().toString(),
-                m.getName(),
-                m.getDescription(),
-                m.getPrice(),
-                m.getStock(),
-                m.getIsAvailable()
-        )).toList();
+    public List<Menu> getAllMenus() {
+        return menuRepository.findAll();
     }
 
-    public MenuResponse getMenuById(String id) {
+    public Menu getMenuById(String id) {
         UUID menuId = UUID.fromString(id);
 
-        Menu menu = menuRepository.findById(menuId).orElseThrow(() -> new NotFoundException("menu with id " + id +" not found"));
-
-        return new MenuResponse(
-                        menu.getId().toString(),
-                        menu.getName(),
-                        menu.getDescription(),
-                        menu.getPrice(),
-                        menu.getStock(),
-                        menu.getIsAvailable());
+        return menuRepository.findById(menuId).orElseThrow(() -> new NotFoundException("menu with id " + id +" not found"));
     }
 
     public void editMenuById(String id, MenuRequest request) {
