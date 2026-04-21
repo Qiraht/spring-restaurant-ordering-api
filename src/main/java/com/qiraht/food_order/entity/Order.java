@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -28,6 +29,9 @@ public class Order {
     @Column(name = "is_ordered", nullable = false)
     @Builder.Default
     private OrderStatus status = OrderStatus.ONGOING;
+
+    @Column(name = "total_amount", nullable = false)
+    private BigDecimal totalAmount;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
