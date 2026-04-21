@@ -10,8 +10,6 @@ public class MenuMapper {
                 menu.getName(),
                 menu.getDescription(),
                 menu.getPrice(),
-                menu.getStock(),
-                menu.getIsAvailable()
-        );
+                menu.getStock());
     }
 }

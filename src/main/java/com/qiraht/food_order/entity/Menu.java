@@ -32,10 +32,6 @@ public class Menu {
     @Column(nullable = false)
     private Integer stock;
 
-    @Column(name = "is_available", nullable = false)
-    @Builder.Default
-    private Boolean isAvailable = true;
-
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
