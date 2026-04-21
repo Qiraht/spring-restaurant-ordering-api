@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/orders")
+@RequestMapping("/api/order")
 @Validated
 public class OrderController {
     private final OrderService orderService;
@@ -31,8 +31,7 @@ public class OrderController {
         String data = orderService.checkoutAuthenticatedUserCart();
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
-                ApiResponse.success("Order created successfully", data)
-        );
+                ApiResponse.success("Order created successfully", data));
     }
 
     @GetMapping
