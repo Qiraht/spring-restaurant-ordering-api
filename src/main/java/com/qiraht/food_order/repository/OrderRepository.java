@@ -1,5 +1,6 @@
 package com.qiraht.food_order.repository;
 
+import com.qiraht.food_order.constant.OrderStatus;
 import com.qiraht.food_order.entity.Order;
 import com.qiraht.food_order.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,4 +12,6 @@ import java.util.UUID;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, UUID> {
     List<Order> findByUserOrderByCreatedAtDesc(User user);
+
+    List<Order> findByStatus(OrderStatus status);
 }
