@@ -129,13 +129,18 @@ public class CartService {
         cartItemsRepository.save(items);
     }
 
-    public void deleteItemsFromAuthenticationCartById(String id) {
+    public void deleteItemsFromCartById(String id) {
         UUID itemId = UUID.fromString(id);
+
+        // get user info
         User user = userService.getAuthenticatedUserByEmail();
 
+        // get cart items
         CartItems items = cartItemsRepository.findById(itemId)
                 .orElseThrow(() -> new NotFoundException("Cart item not found"));
 
+        // check cart items ownership
+        // need to add 'ADMIN' deletion support
         if (!items.getCart().getUser().getId().equals(user.getId())) {
             throw new ValidationException("Cart item does not belong to this user");
         }
