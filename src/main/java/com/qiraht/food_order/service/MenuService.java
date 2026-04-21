@@ -3,7 +3,9 @@ package com.qiraht.food_order.service;
 import com.qiraht.food_order.dto.request.MenuRequest;
 import com.qiraht.food_order.entity.Menu;
 import com.qiraht.food_order.exception.NotFoundException;
+import com.qiraht.food_order.exception.ValidationException;
 import com.qiraht.food_order.repository.MenuRepository;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -64,5 +66,27 @@ public class MenuService {
         Menu menu = menuRepository.findById(menuId).orElseThrow(() -> new NotFoundException("menu with id " + id +" not found"));
 
         menu.setDeletedAt(LocalDateTime.now());
+    }
+
+    @Transactional
+    public void checkoutMenuById(String id, Integer quantity) {
+        UUID menuId = UUID.fromString(id);
+
+        Menu menu = menuRepository.findByIdForUpdate(menuId)
+                .orElseThrow(() -> new ValidationException("menu not found"));
+
+        // Stock validation
+        if (quantity > menu.getStock()) {
+            throw new ValidationException("Item stock not enough");
+        }
+
+        // Deleted validation
+        if (menu.getDeletedAt() != null) {
+            throw new ValidationException("Item is not available");
+        }
+
+        menu.setStock(menu.getStock() - quantity);
+
+        menuRepository.save(menu);
     }
 }
