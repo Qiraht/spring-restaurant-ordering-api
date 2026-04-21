@@ -28,7 +28,6 @@ public class MenuService {
                 .description(request.description())
                 .stock(request.stock())
                 .price(request.price())
-                .isAvailable(true)
                 .build();
 
         menuRepository.save(menu);
@@ -44,13 +43,15 @@ public class MenuService {
     public Menu getMenuById(String id) {
         UUID menuId = UUID.fromString(id);
 
-        return menuRepository.findById(menuId).orElseThrow(() -> new NotFoundException("menu with id " + id +" not found"));
+        return menuRepository.findById(menuId)
+                .orElseThrow(() -> new NotFoundException("menu with id " + id + " not found"));
     }
 
     public void editMenuById(String id, MenuRequest request) {
         UUID menuId = UUID.fromString(id);
 
-        Menu menu = menuRepository.findById(menuId).orElseThrow(() -> new NotFoundException("menu with id " + id +" not found"));
+        Menu menu = menuRepository.findById(menuId)
+                .orElseThrow(() -> new NotFoundException("menu with id " + id + " not found"));
 
         menu.setName(request.name());
         menu.setDescription(request.description());
@@ -63,7 +64,8 @@ public class MenuService {
     public void deleteMenuById(String id) {
         UUID menuId = UUID.fromString(id);
 
-        Menu menu = menuRepository.findById(menuId).orElseThrow(() -> new NotFoundException("menu with id " + id +" not found"));
+        Menu menu = menuRepository.findById(menuId)
+                .orElseThrow(() -> new NotFoundException("menu with id " + id + " not found"));
 
         menu.setDeletedAt(LocalDateTime.now());
     }
