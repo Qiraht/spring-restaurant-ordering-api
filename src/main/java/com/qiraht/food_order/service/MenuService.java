@@ -68,6 +68,8 @@ public class MenuService {
                 .orElseThrow(() -> new NotFoundException("menu with id " + id + " not found"));
 
         menu.setDeletedAt(LocalDateTime.now());
+
+        menuRepository.save(menu);
     }
 
     @Transactional
