@@ -32,7 +32,7 @@ public class OrderItems {
     @Column(nullable = false)
     private Integer quantity;
 
-    @Column(nullable = false)
+    @Column(name = "price_at_sale", nullable = false)
     private BigDecimal priceAtSale;
 
     @CreationTimestamp

@@ -26,7 +26,8 @@ public class Order {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "is_ordered", nullable = false)
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     @Builder.Default
     private OrderStatus status = OrderStatus.ONGOING;
 

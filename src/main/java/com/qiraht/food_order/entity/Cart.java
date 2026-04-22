@@ -25,7 +25,8 @@ public class Cart {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "is_ordered")
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     @Builder.Default
     private CartStatus status = CartStatus.ACTIVE;
 
