@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/scripts/create_users_table.sql
+  - include:
+      file: db/changelog/scripts/create_menus_table.sql
+  - include:
+      file: db/changelog/scripts/create_carts_table.sql
+  - include:
+      file: db/changelog/scripts/create_cart_items_table.sql
+  - include:
+      file: db/changelog/scripts/create_orders_table.sql
+  - include:
+      file: db/changelog/scripts/create_order_items_table.sql
